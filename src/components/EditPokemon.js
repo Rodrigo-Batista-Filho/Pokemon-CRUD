@@ -3,7 +3,7 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-export default class EditPokemon extends Component {
+export class EditPokemon extends Component {
   constructor(props) {
     super(props);
 
@@ -18,12 +18,13 @@ export default class EditPokemon extends Component {
       nome: '',
       nivel: 0,
       data: new Date(),
-      tipos: []
+      // você pode até remover 'tipos' do estado se não precisar mais
     }
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/pokemons/' + this.props.match.params.id)
+    const id = this.props.match.params.id;  // se estiver usando wrapper, ajuste para this.props.params.id
+    axios.get('http://localhost:5000/pokemons/' + id)
       .then(response => {
         this.setState({
           tipo: response.data.tipo,
@@ -35,18 +36,6 @@ export default class EditPokemon extends Component {
       .catch(function (error) {
         console.log(error);
       });
-
-    axios.get('http://localhost:5000/tipos/')
-      .then(response => {
-        if (response.data.length > 0) {
-          this.setState({
-            tipos: response.data.map(tipo => tipo.nome),
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
   }
 
   onChangeTipo(e) {
@@ -85,7 +74,8 @@ export default class EditPokemon extends Component {
 
     console.log(pokemon);
 
-    axios.post('http://localhost:5000/pokemons/update/' + this.props.match.params.id, pokemon)
+    const id = this.props.match.params.id;
+    axios.post('http://localhost:5000/pokemons/update/' + id, pokemon)
       .then(res => console.log(res.data));
 
     window.location = '/';
@@ -98,29 +88,23 @@ export default class EditPokemon extends Component {
       <form onSubmit={this.onSubmit}>
         <div className="form-group"> 
           <label>Tipo: </label>
-          <select ref="tipoInput"
-              required
-              className="form-control"
-              value={this.state.tipo}
-              onChange={this.onChangeTipo}>
-              {
-                this.state.tipos.map(function(tipo) {
-                  return <option 
-                    key={tipo}
-                    value={tipo}>{tipo}
-                    </option>;
-                })
-              }
-          </select>
+          <input 
+            type="text"
+            required
+            className="form-control"
+            value={this.state.tipo}
+            onChange={this.onChangeTipo}
+          />
         </div>
         <div className="form-group"> 
           <label>Nome: </label>
-          <input  type="text"
-              required
-              className="form-control"
-              value={this.state.nome}
-              onChange={this.onChangeNome}
-              />
+          <input  
+            type="text"
+            required
+            className="form-control"
+            value={this.state.nome}
+            onChange={this.onChangeNome}
+          />
         </div>
         <div className="form-group">
           <label>Nível: </label>
@@ -129,7 +113,7 @@ export default class EditPokemon extends Component {
               className="form-control"
               value={this.state.nivel}
               onChange={this.onChangeNivel}
-              />
+          />
         </div>
         <div className="form-group">
           <label>Data de Captura: </label>

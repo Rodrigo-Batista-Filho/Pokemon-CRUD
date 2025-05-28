@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Navbar from "./components/navbar-component";
 import PokemonList from "./components/PokemonList";
-import EditPokemon from "./components/EditPokemon";
+import EditPokemonWrapper from "./components/EditPokemonWrapper"; // <-- importa o wrapper
 import CreatePokemon from "./components/CreatePokemon";
 import CreateTipo from "./components/CreateTipo";
 
@@ -16,7 +16,7 @@ function App() {
         <br />
         <Routes>
           <Route path="/" exact element={<PokemonList />} />
-          <Route path="/edit/:id" element={<EditPokemon />} />
+          <Route path="/edit/:id" element={<EditPokemonWrapper />} /> {/* usa o wrapper */}
           <Route path="/create" element={<CreatePokemon />} />
           <Route path="/tipo" element={<CreateTipo />} />
         </Routes>

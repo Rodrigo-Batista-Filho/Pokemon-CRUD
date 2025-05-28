@@ -1,5 +1,5 @@
 const router = require('express').Router();
-let Pokemon = require('../models/pokemon.model');
+let Pokemon = require('../models/pokemon.js');
 
 // Listar todos os Pokémons
 router.route('/').get((req, res) => {

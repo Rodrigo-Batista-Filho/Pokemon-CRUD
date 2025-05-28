@@ -1,5 +1,5 @@
 const router = require('express').Router();
-let Tipo = require('../models/tipo.model');
+let Tipo = require('../models/tipo.js');
 
 // Listar todos os Tipos
 router.route('/').get((req, res) => {
