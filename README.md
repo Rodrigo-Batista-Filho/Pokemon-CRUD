@@ -35,7 +35,7 @@ npm start
 
 ### Frontend
 
-git clone <URL-frontend>
+git clone 
 npm install
 npm start
 Acesse http://localhost:3000 no navegador.
